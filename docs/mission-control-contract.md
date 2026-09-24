@@ -12,7 +12,7 @@
 | Primary action | Create a task with an initial owner. |
 | Secondary action | Send an operator message to the Revenue Manager chat. |
 | Canonical URL | Not set; local internal prototype only. |
-| Index state | Must remain non-public / `noindex` when a preview route is created. |
+| Index state | `noindex` metadata; edge proxy blocks unauthenticated routes. |
 | Measurement owner | Revenue Manager, subject to Chris-approved telemetry. |
 | Substantive review | 2026-09-24. |
 
@@ -52,8 +52,10 @@
 
 1. **No persistence or agent transport.** Requires Chris approval before any real Hermes/API/task-store wiring.
 2. **No real-time activity.** The pixel office and online labels are intentionally synthetic.
-3. **No public SEO contract.** This is an authenticated/internal application; it must stay out of public search indexes.
-4. **No approved external copy or claims.** Michael retains business/positioning approval; Chris retains production/integration approval.
+3. **Authentication configuration required.** Deployment fails closed until `MISSION_CONTROL_USERNAME`, `MISSION_CONTROL_PASSWORD_HASH`, and `MISSION_CONTROL_SESSION_SECRET` are set as Vercel environment variables.
+4. **Rate limiting required before public exposure.** Configure Vercel firewall/rate-limit controls; this single-account prototype does not include a distributed attempt store.
+5. **No public SEO contract.** This is an authenticated/internal application; it must stay out of public search indexes.
+6. **No approved external copy or claims.** Michael retains business/positioning approval; Chris retains production/integration approval.
 
 ## Recommended next reversible action
 

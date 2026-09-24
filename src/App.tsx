@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent, MouseEvent as ReactMouseEvent } from 'react'
 import {
@@ -16,7 +18,7 @@ import {
   Users,
   X,
 } from 'lucide-react'
-import './App.css'
+
 
 type Stage = 'actively-working' | 'michael' | 'chris' | 'completed'
 
