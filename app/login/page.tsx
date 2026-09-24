@@ -21,7 +21,16 @@ export default function LoginPage() {
         body: JSON.stringify({ username, password }),
       })
       if (!response.ok) {
-        setError(response.status === 503 ? 'Sign-in is not configured yet. Contact the workspace administrator.' : 'The username or password was not recognized.')
+        if (response.status === 503) {
+          const payload: unknown = await response.json().catch(() => null)
+          const configurationError =
+            typeof payload === 'object' && payload !== null && 'error' in payload && typeof payload.error === 'string'
+              ? payload.error
+              : 'Sign-in is not configured yet. Contact the workspace administrator.'
+          setError(configurationError)
+        } else {
+          setError('The username or password was not recognized.')
+        }
         return
       }
       const next = new URLSearchParams(window.location.search).get('next')
