@@ -1,13 +1,10 @@
 import { createHash, scryptSync, timingSafeEqual } from 'node:crypto'
 import { NextResponse } from 'next/server'
+import { getAuthConfigurationError } from '../../../../lib/auth-config'
 import { createSession } from '../../../../lib/auth'
 
 const sessionName = 'mission_control_session'
 const dummyPasswordHash = `${'00'.repeat(16)}:${scryptSync('invalid-password', Buffer.alloc(16), 64).toString('hex')}`
-
-function authConfigurationIsValid(passwordHash: string | undefined, sessionSecret: string | undefined): passwordHash is string {
-  return Boolean(passwordHash && /^[a-f0-9]{32}:[a-f0-9]{128}$/.test(passwordHash) && sessionSecret && Buffer.byteLength(sessionSecret, 'utf8') >= 32)
-}
 
 function passwordMatches(candidate: string, storedHash: string): boolean {
   const [salt, expected] = storedHash.split(':')
@@ -26,9 +23,17 @@ export async function POST(request: Request) {
   const configuredUsername = process.env.MISSION_CONTROL_USERNAME
   const passwordHash = process.env.MISSION_CONTROL_PASSWORD_HASH
   const sessionSecret = process.env.MISSION_CONTROL_SESSION_SECRET
-  if (!configuredUsername || !sessionSecret || !authConfigurationIsValid(passwordHash, sessionSecret)) {
-    return NextResponse.json({ error: 'Sign-in is not configured.' }, { status: 503 })
+  const configurationError = getAuthConfigurationError({
+    MISSION_CONTROL_USERNAME: configuredUsername,
+    MISSION_CONTROL_PASSWORD_HASH: passwordHash,
+    MISSION_CONTROL_SESSION_SECRET: sessionSecret,
+  })
+  if (configurationError) {
+    return NextResponse.json({ error: `Sign-in is not configured: ${configurationError}` }, { status: 503 })
   }
+  const validUsername = configuredUsername as string
+  const validPasswordHash = passwordHash as string
+  const validSessionSecret = sessionSecret as string
 
   let credentials: { username?: unknown; password?: unknown }
   try {
@@ -38,14 +43,14 @@ export async function POST(request: Request) {
   }
   const username = typeof credentials.username === 'string' ? credentials.username : ''
   const password = typeof credentials.password === 'string' ? credentials.password : ''
-  const passwordValid = passwordMatches(password, passwordHash)
-  const usernameValid = safeStringMatches(username, configuredUsername)
+  const passwordValid = passwordMatches(password, validPasswordHash)
+  const usernameValid = safeStringMatches(username, validUsername)
   passwordMatches(password, dummyPasswordHash)
   if (!(passwordValid && usernameValid)) return NextResponse.json({ error: 'Invalid credentials.' }, { status: 401 })
 
   const maxAge = 60 * 60 * 8
   const response = NextResponse.json({ ok: true })
-  response.cookies.set(sessionName, createSession(configuredUsername, sessionSecret, Date.now() + maxAge * 1000), {
+  response.cookies.set(sessionName, createSession(validUsername, validSessionSecret, Date.now() + maxAge * 1000), {
     httpOnly: true,
     maxAge,
     path: '/',
