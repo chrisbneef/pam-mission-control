@@ -50,4 +50,14 @@ describe('Mission Control', () => {
 
     expect(trigger).toHaveFocus()
   })
+
+  it('renders a labeled illustrated workflow office with an accessible static summary', () => {
+    render(<App />)
+
+    expect(screen.getByRole('img', { name: /illustrated workflow office/i })).toBeInTheDocument()
+    expect(screen.getByText('Intelligence library')).toBeInTheDocument()
+    expect(screen.getByText('Operations studio')).toBeInTheDocument()
+    expect(screen.getByText('Decision suite')).toBeInTheDocument()
+    expect(screen.getByText('Illustration only · not live activity data')).toBeInTheDocument()
+  })
 })

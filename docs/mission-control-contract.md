@@ -20,7 +20,7 @@
 
 **THESIS:** A calm, operator-first work surface makes decisions and ownership easier to scan than a generic analytics dashboard.
 
-**OWN-WORLD:** Restrained evergreen navigation, pale operational surfaces, mint action color, compact Manrope labels, and a small CSS pixel-art office that reflects coordinated agent work without claiming live data.
+**OWN-WORLD:** Restrained evergreen navigation, pale operational surfaces, mint action color, compact Manrope labels, and a CSS floor-plan office that makes the workflow geography legible without claiming live data.
 
 **STORY:** An operator sees the next decision, reviews work by approval state, creates a bounded task, and sends an internal message.
 
@@ -36,7 +36,7 @@
 |---|---|---|---|
 | Specialist names and ownership | PAM fact | `operations/PAM-REVENUE-TEAM.md` | Displayed as representative internal work. |
 | P1 work themes | PAM fact / draft representation | `operations/BACKLOG.md` | Task cards are illustrative local state, not a live backlog import. |
-| “5 agents online”, office states, availability | Synthetic UI state | Web Experience prototype | Must not be presented as live without an approved integration. |
+| Office rooms, animated markers, and workflow labels | Synthetic UI state | Web Experience prototype | Motion is illustrative and must not be presented as live without an approved integration. |
 | Chat conversation and new tasks | Synthetic local state | Web Experience prototype | No external delivery or persistence occurs. |
 
 ## QA evidence
@@ -51,7 +51,7 @@
 ## Known limitations and approvals
 
 1. **No persistence or agent transport.** Requires Chris approval before any real Hermes/API/task-store wiring.
-2. **No real-time activity.** The pixel office and online labels are intentionally synthetic.
+2. **No real-time activity.** The office floor plan and animated markers are intentionally synthetic.
 3. **Authentication configuration required.** Deployment fails closed until `MISSION_CONTROL_USERNAME`, `MISSION_CONTROL_PASSWORD_HASH`, and `MISSION_CONTROL_SESSION_SECRET` are set as Vercel environment variables.
 4. **Rate limiting required before public exposure.** Configure Vercel firewall/rate-limit controls; this single-account prototype does not include a distributed attempt store.
 5. **No public SEO contract.** This is an authenticated/internal application; it must stay out of public search indexes.

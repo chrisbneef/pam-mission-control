@@ -52,22 +52,23 @@ function PixelOffice() {
     <section className="office-panel" id="office" aria-labelledby="office-title">
       <div className="panel-heading">
         <div>
-          <p className="section-label"><Sparkles size={13} /> Live agent floor</p>
+          <p className="section-label"><Sparkles size={13} /> Illustrated workflow floor</p>
           <h2 id="office-title">The office is in motion</h2>
         </div>
-        <span className="live-badge"><i /> 5 agents online</span>
+        <span className="live-badge">Prototype view</span>
       </div>
-      <div className="pixel-office" role="img" aria-label="Animated pixel art office showing five PAM agents working at desks">
-        <div className="office-window"><span /><span /><span /></div>
-        <div className="office-clock">09:41</div>
-        <div className="plant"><i /><b /><em /></div>
-        <div className="desk desk-one"><div className="screen">▣</div><div className="agent agent-mint"><b /></div><span className="lamp" /></div>
-        <div className="desk desk-two"><div className="screen">···</div><div className="agent agent-violet"><b /></div><span className="paper" /></div>
-        <div className="desk desk-three"><div className="screen">↗</div><div className="agent agent-amber"><b /></div><span className="coffee" /></div>
-        <div className="office-cat">✦</div>
-        <div className="floor-line" />
+      <div className="workflow-office" role="img" aria-label="Illustrated workflow office with an opportunity lobby, intelligence library, operations studio, decision suite, and strategy room. Animated markers are illustrative and do not represent live agent activity.">
+        <div className="office-sign"><b>PAM</b><span>Revenue HQ</span></div>
+        <div className="office-hall"><span className="hall-glow" /></div>
+        <section className="office-room lobby"><span className="room-code">01</span><h3>Opportunity lobby</h3><p>Intake &amp; waiting</p><div className="sofa"><i /><i /></div><span className="plant p-one" /></section>
+        <section className="office-room library"><span className="room-code">02</span><h3>Intelligence library</h3><p>Research &amp; evidence</p><div className="bookcase"><i /><i /><i /><i /><i /><i /></div><div className="table"><span /><span /><span /></div><span className="agent-marker research"><b /></span></section>
+        <section className="office-room executive"><span className="room-code">03</span><h3>Decision suite</h3><p>Michael &amp; Chris</p><div className="executive-desk"><span /><i /></div><span className="plant p-two" /></section>
+        <section className="office-room operations"><span className="room-code">04</span><h3>Operations studio</h3><p>Build &amp; ship</p><div className="ops-board"><i /><i /><i /></div><div className="work-desk"><span /><span /></div><span className="agent-marker build"><b /></span></section>
+        <section className="office-room strategy"><span className="room-code">05</span><h3>Strategy room</h3><p>Ideas → action</p><div className="strategy-table"><span /><span /><span /><span /></div><span className="plant p-three" /></section>
+        <span className="agent-marker courier"><b /></span>
+        <span className="workflow-spark spark-one" /><span className="workflow-spark spark-two" />
       </div>
-      <div className="office-footer"><span><i className="presence mint" />PAM Intelligence researching</span><span><i className="presence violet" />Web Experience building</span></div>
+      <div className="office-footer"><span>Illustrative workflow roles</span><span>Illustration only · not live activity data</span></div>
     </section>
   )
 }
