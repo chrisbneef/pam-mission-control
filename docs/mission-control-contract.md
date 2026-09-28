@@ -38,15 +38,17 @@
 | P1 work themes | PAM fact / draft representation | `operations/BACKLOG.md` | Task cards are illustrative local state, not a live backlog import. |
 | Office rooms, animated markers, and workflow labels | Synthetic UI state | Web Experience prototype | Motion is illustrative and must not be presented as live without an approved integration. |
 | Chat conversation and new tasks | Synthetic local state | Web Experience prototype | No external delivery or persistence occurs. |
+| Lead Engine Readiness | Fixture-only operational state | `operations/team-handoffs/2026-09-28-revenue-manager-to-pamwebexperience-lead-engine-fixture-contract.json` | Persistent local-fixture label; P1/Waiting ownership, G-016/G-015 blockers, gate states, and null metrics are not live telemetry or transport. |
 
 ## QA evidence
 
-- Automated unit interaction tests: `npm test` (4 passing tests, including task creation, chat compose, Escape dismissal, and trigger-focus restoration).
+- Automated unit interaction tests: `npm test` (5 test files and 14 tests passing, including Lead Engine fixture coverage).
 - Type and production build: `npm run build` passed.
 - Lint: `npm run lint` passed.
-- Browser QA: desktop 1280px and mobile 390px inspected; task creation and message compose exercised in a live Vite server.
+- Browser QA limitation: local browser inspection stopped at the intentional sign-in wall because the local runtime did not have the fixture authentication configuration. No post-login Lead Engine visual pass is claimed; automated test, build, and lint evidence is recorded below.
 - Accessibility checks included semantic landmarks, headings, explicit input labels, visible focus rules, native dialog semantics, keyboard-capable controls, and reduced-motion styling.
 - Independent staged-diff review completed. It found no application logic errors after the focus-management fix; public deployment without access control remains release-blocking.
+- Lead Engine fixture verification: all seven contract gates, P1/Waiting ownership, next human action, twelve `Unknown` metrics, blocked-action boundary, and the three source paths render in the local UI. No live connector or action control was added.
 
 ## Known limitations and approvals
 

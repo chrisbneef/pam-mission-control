@@ -47,6 +47,45 @@ const seedTasks: Task[] = [
   { id: 5, title: 'Core narrative handoff', owner: 'PAM Content', stage: 'completed', priority: 'P2', note: 'Accepted Sep 23', initials: 'PC' },
 ]
 
+const leadEngineGates = [
+  { label: 'Campaign authority', state: 'Waiting', owner: 'Michael', reason: 'Daily authorization, ICP, sender, CTA, claims, cap, and stop rule are not documented.' },
+  { label: 'Google Workspace OAuth', state: 'Waiting', owner: 'Chris / account owner', reason: 'The Revenue Manager profile returned NOT_AUTHENTICATED on Sep 28.' },
+  { label: 'Zoho production-state audit', state: 'Waiting', owner: 'Chris', reason: 'Tenant, fields, workflows, suppression, booking, and reporting are unverified.' },
+  { label: 'Sender and deliverability posture', state: 'Waiting', owner: 'Chris', reason: 'Mailbox and DNS/authentication state are unknown.' },
+  { label: 'Suppression and opt-out control', state: 'Waiting', owner: 'Chris', reason: 'No verified single source of truth or test result.' },
+  { label: 'Calendar and CRM attribution', state: 'Waiting', owner: 'Chris', reason: 'Booking owner, availability, event semantics, and Zoho writeback are unverified.' },
+  { label: 'Seed test', state: 'Blocked', owner: 'PAM Revenue Manager', reason: 'Requires all preceding gates and explicit approval for controlled internal sends/events.' },
+]
+
+const leadEngineMetrics = [
+  'Candidates researched', 'Eligible', 'Suppressed', 'Approved to send', 'Delivered', 'Replies',
+  'Positive replies', 'Opt-outs', 'Complaints', 'Booked', 'Held', 'Qualified',
+]
+
+const leadEngineSources = [
+  'operations/LEAD-GENERATION-OPERATING-RUNBOOK.md',
+  'research/2026-09-28-google-zoho-lead-operations-integration.md',
+  'outputs/2026-09-28-autonomous-lead-engine-readiness.md',
+]
+
+function LeadEngineFixture() {
+  return (
+    <section className="lead-engine" id="lead-engine" aria-labelledby="lead-engine-title">
+      <header className="lead-engine-header">
+        <div><p className="section-label">Lead Engine</p><h2 id="lead-engine-title">Readiness is waiting on human gates.</h2></div>
+        <span className="fixture-badge">Local fixture only</span>
+      </header>
+      <p className="lead-engine-summary">P1 · Lifecycle: Waiting · Owner: PAM Revenue Manager. Data mode: fixture. Blocked by G-016 and G-015. This view has no live connector, transport, telemetry, task dispatch, or external write capability.</p>
+      <div className="lead-engine-callout"><div><strong>Next human action</strong><p>Provide Google Workspace and Zoho OAuth access, then complete the live-state audit and controlled seed test.</p></div><span className="gate-summary">6 waiting · 1 blocked</span></div>
+      <div className="lead-engine-grid">
+        <section aria-labelledby="lead-gates-title"><h3 id="lead-gates-title">Gate state</h3><ol className="gate-list">{leadEngineGates.map((gate) => <li key={gate.label}><div className="gate-title"><span className={`gate-state ${gate.state.toLowerCase()}`}>{gate.state}</span><strong>{gate.label}</strong></div><p>{gate.reason}</p><span className="gate-owner">Owner: {gate.owner}</span></li>)}</ol></section>
+        <section aria-labelledby="lead-metrics-title"><h3 id="lead-metrics-title">Metrics</h3><p className="metric-rule">Unknown until an approved authoritative system read. Unknown is not zero.</p><dl className="metric-list">{leadEngineMetrics.map((metric) => <div key={metric}><dt>{metric}</dt><dd>Unknown</dd></div>)}</dl></section>
+      </div>
+      <footer className="lead-engine-footer"><div><strong>Blocked live actions</strong><span>Send email, create calendar invitations, write Zoho records, import contacts, change CRM workflows or DNS, and dispatch live agent actions.</span></div><div><strong>Workspace source paths</strong><ul>{leadEngineSources.map((source) => <li key={source}><code>{source}</code></li>)}</ul></div></footer>
+    </section>
+  )
+}
+
 function PixelOffice() {
   return (
     <section className="office-panel" id="office" aria-labelledby="office-title">
@@ -146,6 +185,7 @@ function App() {
         <nav>
           <a className="nav-item active" href="#command"><LayoutDashboard size={18} /> Command center</a>
           <a className="nav-item" href="#board"><Command size={18} /> Work board <span className="nav-count">{totalWorking}</span></a>
+          <a className="nav-item" href="#lead-engine"><Bot size={18} /> Lead Engine</a>
           <a className="nav-item" href="#office"><Users size={18} /> Agent office</a>
         </nav>
         <div className="sidebar-bottom"><div className="approval-note"><CircleHelp size={17} /><span>Human approvals are always explicit.</span></div><button className="profile" type="button"><span className="avatar operator">MN</span><span>Michael Neef<small>Operator</small></span><ChevronDown size={16} /></button></div>
@@ -165,6 +205,8 @@ function App() {
           </section>
           <PixelOffice />
         </section>
+
+        <LeadEngineFixture />
 
         <section className="chat-section" aria-labelledby="chat-title">
           <div className="chat-header"><div><p className="section-label"><MessageCircle size={13} /> Direct line</p><h2 id="chat-title">Revenue Manager chat</h2></div><span className="agent-status"><i /> Available now</span></div>

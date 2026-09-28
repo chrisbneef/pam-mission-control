@@ -60,4 +60,17 @@ describe('Mission Control', () => {
     expect(screen.getByText('Decision suite')).toBeInTheDocument()
     expect(screen.getByText('Illustration only · not live activity data')).toBeInTheDocument()
   })
+
+  it('renders the Lead Engine as a local fixture with unknown metrics and blocked gates', () => {
+    render(<App />)
+
+    expect(screen.getByText('Local fixture only')).toBeInTheDocument()
+    expect(screen.getByText(/P1 · Lifecycle: Waiting · Owner: PAM Revenue Manager/)).toBeInTheDocument()
+    expect(screen.getByText(/Data mode: fixture. Blocked by G-016 and G-015/)).toBeInTheDocument()
+    expect(screen.getByText('Seed test')).toBeInTheDocument()
+    expect(screen.getByText('Blocked', { selector: '.gate-state' })).toBeInTheDocument()
+    expect(screen.getAllByText('Unknown')).toHaveLength(12)
+    expect(screen.getByText(/Unknown is not zero/)).toBeInTheDocument()
+    expect(screen.getByText('operations/LEAD-GENERATION-OPERATING-RUNBOOK.md')).toBeInTheDocument()
+  })
 })
